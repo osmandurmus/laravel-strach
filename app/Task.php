@@ -9,7 +9,7 @@ class Task extends Model
     protected $guarded = [];
 
     // improve encapsulation
-    public function complete($completed = true){   // $task->complete(false)
+    public function complete($completed = true){   // $task->complete(false) //default true
 
         $this->update(compact('completed')); 
         // $this->update(['completed' => true]);

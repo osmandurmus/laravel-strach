@@ -22,7 +22,7 @@
                         <form method="POST" action="/completed-tasks/{{ $task->id }}">
                             
                             @if ($task->completed)
-                                @method('DELETE')
+                                @method('DELETE')  {{-- ilgili task'in completed özelliği true ise delete operasyonu yapıyoruz --}}
                             @endif
 
                             @csrf

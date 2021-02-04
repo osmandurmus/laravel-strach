@@ -1,7 +1,16 @@
 <?php
 
+
+
+// app()->singleton('App\Example',function(){ // singleton gives same instance, bind gives different uniq instance
+//     return new \App\Example;
+// });
+
 Route::get('/',function(){
-    return "welcome";
+
+    dd(app('App\Example'),app('App\Example'));
+
+    return view("welcome");
 });
 
 Route::resource('projects','ProjectsController');
