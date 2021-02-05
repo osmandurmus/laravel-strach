@@ -1,19 +1,10 @@
 <?php
 
+use App\Services\Twitter;
 
+Route::get('/',function(Twitter $twitter){
 
-// app()->singleton('App\Example',function(){ // app()->singleton gives same instance, app()->bind gives different uniq instance
-//     dd("called");
-//     return new \App\Example;
-// });
-
-app()->singleton('App\Services\Twitter', function(){
-    return new App\Services\Twitter('asdf twitter key');
-});
-
-Route::get('/',function(){
-
-    dd(app('App\Example')); // Class yolunu key olarak verirsek auto-resolution ile app()->singleton veya app()->bind ile bağlama yapmaya gerek kalmayabilir. Key varsa ilk olarak keye bakar yoksa class ismine göre auot-resolution yapar
+    dd($twitter);
 
     return view("welcome");
 });
