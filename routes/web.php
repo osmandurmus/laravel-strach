@@ -1,10 +1,18 @@
 <?php
 
 use App\Services\Twitter;
+use App\Repositories\UserRepository;
 
-Route::get('/',function(Twitter $twitter){
+Route::get('/',function(Twitter $twitter){ // Twitter nesnesi otomatik olarak SocialServicesProvider tarafından çözülür.
 
     dd($twitter);
+
+    return view("welcome");
+});
+
+Route::get('/users',function(UserRepository $users){ // İnterface yi uygulayan service providerda yazan implementasyon classını çözümler.
+
+    dd($users);
 
     return view("welcome");
 });

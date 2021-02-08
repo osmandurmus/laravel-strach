@@ -14,9 +14,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(Twitter::class, function(){
-            return new Twitter('api-key');  // config('services.twitter.key') config dosyasından key de alınabilir.
-        });
+        $this->app->bind(
+            \App\Repositories\UserRepository::class, // İnerface ve istediğin onu uygulayan class
+            \App\Repositories\DbUserRepository::class
+        );
     }
 
     /**
