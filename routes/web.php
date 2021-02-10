@@ -10,12 +10,6 @@ Route::get('/',function(Twitter $twitter){ // Twitter nesnesi otomatik olarak So
     return view("welcome");
 });
 
-Route::get('/users',function(UserRepository $users){ // İnterface yi uygulayan service providerda yazan implementasyon classını çözümler.
-
-    dd($users);
-
-    return view("welcome");
-});
 
 Route::resource('projects','ProjectsController'); 
 
@@ -26,6 +20,9 @@ Route::post('/completed-tasks/{task}', 'CompletedTasksController@store');
 Route::delete('/completed-tasks/{task}', 'CompletedTasksController@destroy');
 
 
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 
 
@@ -34,6 +31,16 @@ Route::delete('/completed-tasks/{task}', 'CompletedTasksController@destroy');
 
 
 
+
+
+// DENEMELER
+
+Route::get('/users',function(UserRepository $users){ // İnterface yi uygulayan service providerda yazan implementasyon classını çözümler.
+
+    dd($users);
+
+    return view("welcome");
+});
 
 
 
@@ -48,14 +55,3 @@ Route::delete('/completed-tasks/{task}', 'CompletedTasksController@destroy');
 // Route::get('/projects/{projects}/edit','ProjectsController@edit');
 // Route::patch('/projects/{project}','ProjectsController@update');
 // Route::delete('/projects/{projects}','ProjectsController@destroy');
-
-
-
-
-
-
-
-
-
-
-

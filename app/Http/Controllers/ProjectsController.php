@@ -8,9 +8,17 @@ use App\Services\Twitter;
 
 class ProjectsController extends Controller
 {
+
+    public function __construct(){
+        
+        $this->middleware('auth'); // Sadece kimlik doğrulaması yapanlar erişebilecek. Bu controllerdaki her bir action'a uygulanır.  --protected
+                                    // middleware('auth')->only(['store','update'])  or middleware('auth')->except(['show]) ihtiyaca göre kullanılabilir.
+                                    // middleware constructor haricinde route'lara da direk uygulanabilir.
+    }
+
     public function index(){
 
-        $projects = Project::all();
+        $projects = Project::where('owner_id',auth()->id())->get(); // select * from projects where owner_id = 4 -- kendisine ait projeleri getirir
 
         return view('projects.index',compact('projects'));
     }
@@ -30,6 +38,8 @@ class ProjectsController extends Controller
             'title' => ['required', 'min:3'],
             'description' => ['required', 'min:3']
         ]);
+
+        $attributes['owner_id'] = auth()->id();  // diziye yeni key value eklendi -- auth()->id() giriş yapan user'ın id'sini verir
 
         Project::create($attributes);
 
