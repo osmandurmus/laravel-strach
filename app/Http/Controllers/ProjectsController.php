@@ -28,7 +28,23 @@ class ProjectsController extends Controller
     }
 
     public function show(Project $project){
-        
+
+        //abort_if( $project->owner_id !== auth()->id(), 403); // authorization --> kullanıcı başkasının projesini görüntüleyemeyecek.  abort_if helper func
+
+        //abort_unless(auth()->user()->owns($project), 403); // authorization another approach
+
+        // if(\Gate::denies('update', $project)){ // authorization another approach
+        //     abort(403);
+        // }
+
+        // abort_if(\Gate::denies('update', $project), 403);  // authorization another approach
+
+        // abort_unless(\Gate::allows('update', $project), 403); // authorization another approach
+
+        // auth()->user()->can('update', $project); // authorization another approach, can Middleware\Authorize::class' ı referans eder.
+
+        $this->authorize('update', $project); // authorization ve sağlanamazsa abort 403 üretir, authorize method policy class'a referans eder. Another approach
+   
         return view('projects.show',compact('project'));
     }
 
