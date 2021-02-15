@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Project;
 use App\Services\Twitter;
 use App\Mail\ProjectCreated;
+use Illuminate\Support\Facades\Mail;
 
 class ProjectsController extends Controller
 {
