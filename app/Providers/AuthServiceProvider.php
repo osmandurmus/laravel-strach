@@ -16,7 +16,9 @@ class AuthServiceProvider extends ServiceProvider
         
           // 'App\Model' => 'App\Policies\ModelPolicy',
         
-        'App\Project' => 'App\Policies\ProjectPolicy',
+        'App\Project' => 'App\Policies\ProjectPolicy', // belirli bir model türüne karşı eylemlere yetki verirken hangi politikanın kullanılacağını belirler.
+                                                       // Bir politikanın kaydedilmesi, Laravel'e belirli bir Eloquent modeline karşı eylemleri yetkilendirirken hangi politikayı kullanacağını söyleyecektir.
+                                                       // Project::class => ProjectPolicy::class şeklinde de olur.
 
     ];
 
@@ -29,7 +31,11 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        $gate->before(function($user){ // Policyden ilk trigger budur.
+
+        // Kapanıştan önce boş olmayan bir sonuç(true,false) döndürürse, bu sonuç yetkilendirme kontrolünün sonucu olarak kabul edilecektir.
+        // Diğer tüm yetkilendirme kontrollerinden önce çalıştırılan bir kapanışı tanımlamak için before yöntemini kullanabilirsiniz.
+        // Diğer tüm yetkilendirme kontrollerinden sonra yürütülecek bir kapatmayı tanımlamak için after yöntemini kullanabilirsiniz.
+        $gate->before(function($user){ // Policyden önce ilk trigger budur,
             return $user->id == 2; // this is an admin id 2.
         });
     }
