@@ -20,9 +20,12 @@ class ProjectsController extends Controller
 
     public function index(){
 
-        $projects = Project::where('owner_id',auth()->id())->get(); // select * from projects where owner_id = 4 -- kendisine ait projeleri getirir
+        // $projects = Project::where('owner_id',auth()->id())->get(); // select * from projects where owner_id = 4 -- kendisine ait projeleri getirir
 
-        return view('projects.index',compact('projects'));
+        return view('projects.index', [
+            // Get all the projects for the authenticated user.
+            'projects' => auth()->user()->projects
+        ]);
     }
 
     public function create(){
@@ -51,11 +54,8 @@ class ProjectsController extends Controller
     }
 
     public function store(){
-        //backend validation control
-        $attributes = request()->validate([
-            'title' => ['required', 'min:3'],
-            'description' => ['required', 'min:3']
-        ]);
+        
+        $attributes = $this->validateProject(); // Validation
 
         $attributes['owner_id'] = auth()->id();  // diziye yeni key value eklendi -- auth()->id() giriş yapan user'ın id'sini verir
 
@@ -88,11 +88,9 @@ class ProjectsController extends Controller
     }
  
     public function update(Project $project){ //Model binding
-        
-        $project->title = request('title');
-        $project->description = request('description');
 
-        $project->save();
+        // $project->update(request(['title', 'description']));
+        $project->update($this->validateProject());
 
         return redirect('/projects');
     }
@@ -103,5 +101,14 @@ class ProjectsController extends Controller
 
         return redirect('/projects');
         
-    }  
+    }
+
+    public function validateProject(){
+        
+        //backend validation control
+        return request()->validate([
+            'title' => ['required', 'min:3'],
+            'description' => ['required', 'min:3']
+        ]);
+    }
 }
