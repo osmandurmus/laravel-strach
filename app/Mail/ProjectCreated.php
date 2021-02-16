@@ -11,7 +11,8 @@ class ProjectCreated extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $project;
+    public $project; // Mailable class'ında oluşturulan herhangi bir public property build() metodunda işaret edilen view'da mevcut olur ve kullanılabilir.
+                     // İşaret edilen view (mail.project-created) tarafından erişilebilir olmasını istenirse property'i protected olarak tanımlamayınız!
 
     /**
      * Create a new message instance.
