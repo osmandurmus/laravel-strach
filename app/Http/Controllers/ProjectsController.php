@@ -59,11 +59,7 @@ class ProjectsController extends Controller
 
         $attributes['owner_id'] = auth()->id();  // diziye yeni key value eklendi -- auth()->id() giriş yapan user'ın id'sini verir
 
-        $project = Project::create($attributes);
-
-        Mail::to($project->owner->email)->send( // project owner'a mail gönderecek
-            new ProjectCreated($project)
-        );
+        Project::create($attributes);
 
         return redirect('/projects');
 
