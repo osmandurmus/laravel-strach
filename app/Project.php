@@ -14,8 +14,9 @@ class Project extends Model
         
         parent::boot();
 
-        static::created(function ($project) { // after a project created, works this method ----------------  *updated,*deleted vs
-            Mail::to($project->owner->email)->send( // project owner'a mail gönderecek
+                                                        // hooking created project, this is TRADITIONAL EVENT
+        static::created(function ($project) {           // after a project created, works this method ----------------  *updated,*deleted vs
+            Mail::to($project->owner->email)->send(     // project owner'a mail gönderecek
                 new ProjectCreated($project)
             );
         });
