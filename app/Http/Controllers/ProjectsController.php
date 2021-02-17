@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Project;
 use App\Services\Twitter;
-use App\Mail\ProjectCreated;
-use Illuminate\Support\Facades\Mail;
+use App\Events\ProjectCreated;
 
 class ProjectsController extends Controller
 {
@@ -59,7 +58,9 @@ class ProjectsController extends Controller
 
         $attributes['owner_id'] = auth()->id();  // diziye yeni key value eklendi -- auth()->id() giriş yapan user'ın id'sini verir
 
-        Project::create($attributes);
+        $project = Project::create($attributes);
+
+        // event(new ProjectCreated($project)); // Proje create edildikten sonra event yardımcı methodu ile event class'ına gönderiyoruz. Project->dispatchesEvents ile aynı işi görür.
 
         return redirect('/projects');
 

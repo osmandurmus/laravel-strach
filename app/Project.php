@@ -2,25 +2,16 @@
 
 namespace App;
 
+use App\Events\ProjectCreated;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\ProjectCreated;
 
 class Project extends Model
 {
     protected $guarded=[];
 
-    protected static function boot(){ 
-        
-        parent::boot();
-
-                                                        // hooking created project, this is TRADITIONAL EVENT
-        static::created(function ($project) {           // after a project created, works this method ----------------  *updated,*deleted vs
-            Mail::to($project->owner->email)->send(     // project owner'a mail gönderecek
-                new ProjectCreated($project)
-            );
-        });
-    }
+    protected $dispatchesEvents = [
+        'created' => ProjectCreated::class    // Another approach for custom event listener, Bir proje create edildiğinde otomatik ProjectCreated event nesnesi oluşur.
+    ];
 
     public function owner(){
         return $this->belongsTo(User::class);
@@ -39,4 +30,17 @@ class Project extends Model
         //     'description' => $description
         // ]);
     }
+
+
+    // For Eloquent event hook
+    // protected static function boot(){
+        
+    //     parent::boot();
+    //                                                     // hooking created project, this is TRADITIONAL EVENT
+    //     static::created(function ($project) {           // after a project created, works this method ----------------  *updated,*deleted vs
+    //         Mail::to($project->owner->email)->send(     // project owner'a mail gönderecek
+    //             new ProjectCreated($project)            // This ProjectCreated points mailable class
+    //         );
+    //     });
+    // }
 }
