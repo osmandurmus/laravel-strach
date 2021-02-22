@@ -9,7 +9,7 @@ class Project extends Model
 {
     protected $guarded=[];
 
-    protected $dispatchesEvents = [
+    protected $dispatchesEvents = [             // ProjectCreated event class' ı bir ORM Eloquent object olan Project alır.
         'created' => ProjectCreated::class    // Another approach for custom event listener, Bir proje create edildiğinde otomatik ProjectCreated event nesnesi oluşur.
     ];
 

@@ -5,8 +5,12 @@ namespace App\Events;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 
-class ProjectCreated // SendProjectCreatedNotification listener' ı bu event'ı dinler.
+class ProjectCreated
 {
+
+    // EventServiceProvider'da register edildiği gibi SendProjectCreatedNotification listener' ı bu event'ı dinler.
+    // Bu event class bir mantık içermez. Enjecte edilen Project Eloquent model nesnesi için bir container görevi görür.
+
     use Dispatchable, SerializesModels;
 
     public $project;

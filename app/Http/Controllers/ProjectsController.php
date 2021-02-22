@@ -60,7 +60,7 @@ class ProjectsController extends Controller
 
         $project = Project::create($attributes);
 
-        // event(new ProjectCreated($project)); // Proje create edildikten sonra event yardımcı methodu ile event class'ına gönderiyoruz. Project->dispatchesEvents ile aynı işi görür.
+        // event(new ProjectCreated($project)); // Proje create edildikten sonra event yardımcı methodu ile event class'ına gönderiyoruz. Dispatching Events for event helper.
 
         return redirect('/projects');
 
